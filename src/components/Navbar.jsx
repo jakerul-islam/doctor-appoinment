@@ -49,21 +49,23 @@ const Navbar = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="px-4 py-2 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200"
-          >
-            Login
-          </Link>
+       <div className="flex items-center gap-3">
+  {/* Login - Transparent */}
+  <Link
+    href="/login"
+   className="border border-teal-500 text-teal-500 px-4 py-2 rounded-xl text-sm hover:bg-teal-500/10 transition"
+  >
+    Login
+  </Link>
 
-          <Link
-            href="/register"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
-          >
-            Register
-          </Link>
-        </div>
+  {/* Register - Solid */}
+  <Link
+    href="/register"
+    className="bg-teal-500 text-white px-4 py-2 rounded-xl text-sm hover:bg-teal-600 transition"
+  >
+    Register
+  </Link>
+</div>
       </div>
     </nav>
     );
