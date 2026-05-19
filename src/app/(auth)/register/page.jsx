@@ -38,6 +38,12 @@ const onSubmit =async(e)=>{
 
 
 }
+
+const googleSignInHandle = async()=>{
+    const data = await authClient.signIn.social({
+    provider: "google",
+  });
+}
     return (
         <div className=' my-15 flex justify-center items-center'>
        <Card className='border '>
@@ -141,6 +147,7 @@ const onSubmit =async(e)=>{
 
       {/* Hero UI Button for Google Sign-In */}
       <Button
+      onClick={googleSignInHandle}
         variant="bordered"
         radius="xl"
         className="w-full bg-slate-50/40 hover:bg-slate-50/80 border-slate-200 text-slate-700 h-12 shadow-sm font-semibold transition-all rounded-none flex items-center justify-center gap-3"
