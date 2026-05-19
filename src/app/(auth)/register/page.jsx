@@ -1,18 +1,41 @@
 "use client"
+import { authClient } from '@/lib/auth-client';
 import { Button, Card, Description, FieldError, Form, Input, Label, TextField } from '@heroui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
-
-const onSubmit =(e)=>{
+const router = useRouter()
+const onSubmit =async(e)=>{
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const data = Object.fromEntries(formData.entries())
-    console.log(data, 'from register page')
+    const userData = Object.fromEntries(formData.entries())
+    console.log(userData, 'from register page')
+
+    const {data,error}=await authClient.signUp.email({
+        ...userData,
+       
+    },{
+        onSuccess:()=>{
+            router.push("/")
+        }
+    })
+    if(error){
+
+        toast.error(`{error.message}`)
+        return
+    }
+    if(data){
+        toast.success('signup successfully')
+    }
+
+    
+
 
 }
     return (

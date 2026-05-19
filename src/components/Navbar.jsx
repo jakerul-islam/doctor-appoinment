@@ -1,8 +1,19 @@
+'use client'
+import { authClient, useSession } from '@/lib/auth-client';
+import { Avatar, Button } from '@heroui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
+
+  const {data:session}=authClient.useSession();
+  const user = session?.user;
+  console.log(user)
+
+  const logoutHandle = async()=>{
+    await authClient.signOut();
+  }
     return (
          <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -49,23 +60,41 @@ const Navbar = () => {
         </div>
 
         {/* Buttons */}
-       <div className="flex items-center gap-3">
+       <ul className="flex items-center gap-3">
   {/* Login - Transparent */}
-  <Link
+{user? <>
+      <li>
+<Avatar>
+        <Avatar.Image alt="John Doe" src={user?.image} />
+        <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
+      </Avatar>
+      </li>
+      <Button onClick={logoutHandle} className={'rounded-none'} variant='outline'>LogOut</Button>
+      <li>
+
+      </li>
+</>: <>
+  <li>
+    <Link
     href="/login"
    className="border border-teal-500 text-teal-500 px-4 py-2 rounded-xl text-sm hover:bg-teal-500/10 transition"
   >
     Login
   </Link>
+  </li>
 
   {/* Register - Solid */}
-  <Link
+  <li>
+ <Link
     href="/register"
     className="bg-teal-500 text-white px-4 py-2 rounded-xl text-sm hover:bg-teal-600 transition"
   >
     Register
   </Link>
-</div>
+  </li>
+ 
+ </>}
+</ul>
       </div>
     </nav>
     );

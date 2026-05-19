@@ -1,18 +1,30 @@
 "use client"
+import { authClient } from "@/lib/auth-client";
 import { Button, Card, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 
 const LoginPage = () => {
     
-    const onSubmit =(e)=>{
+    const onSubmit =async (e)=>{
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const data = Object.fromEntries(formData.entries())
-    console.log(data, 'from login page')
+    const userData = Object.fromEntries(formData.entries())
+    console.log(userData, 'from login page')
+
+    const {data,error}= await authClient.signIn.email({
+        ...userData,
+
+        callbackURL:'/'
+    })
+
+    if(error){
+        toast.error('login failed')
+    }
 
 }
     return (
