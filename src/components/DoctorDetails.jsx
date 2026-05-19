@@ -1,7 +1,12 @@
 import { BanknotesIcon, BriefcaseIcon, BuildingOffice2Icon, MapPinIcon, StarIcon } from '@heroicons/react/16/solid';
-import { Button, Card, Chip } from '@heroui/react';
+import { Card, Chip } from '@heroui/react';
 import Image from 'next/image';
 import React from 'react';
+import BookingCardModal from './BookingCardModal';
+
+
+
+
 
 const DoctorDetails = ({doctor}) => {
     console.log(doctor)
@@ -111,12 +116,7 @@ const DoctorDetails = ({doctor}) => {
 
           {/* Action Button */}
           <div className="mt-2">
-            <Button 
-              className="bg-teal-500 hover:bg-teal-600 text-white font-medium px-6 py-2.5 rounded-xl shadow-md transition-all"
-              size="md"
-            >
-              Book Appointment
-            </Button>
+        <BookingCardModal doctor={doctor}></BookingCardModal>
           </div>
 
         </div>

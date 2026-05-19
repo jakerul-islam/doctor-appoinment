@@ -22,6 +22,9 @@ const LoginPage = () => {
         callbackURL:'/'
     })
 
+    // const {data:tokenData}=await authClient.token()
+    // console.log(tokenData)
+
     if(error){
         toast.error('login failed')
     }
@@ -148,3 +151,5 @@ const googleSignInHandle = async()=>{
 };
 
 export default LoginPage;
+
+

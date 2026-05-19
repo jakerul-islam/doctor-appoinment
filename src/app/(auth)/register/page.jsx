@@ -180,3 +180,6 @@ const googleSignInHandle = async()=>{
 };
 
 export default RegisterPage;
+
+
+

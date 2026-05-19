@@ -1,19 +1,29 @@
 
+
+
 'use client'
 import { authClient } from '@/lib/auth-client';
 import { Avatar, Button } from '@heroui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const logoutHandle = async () => {
     await authClient.signOut();
   };
+
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/appointments', label: 'All Appointment' },
+    { href: '/dashboard', label: 'Dashboard' },
+  ];
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -33,18 +43,25 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/" className="font-medium relative group">
-            Home
-            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/appointments" className="font-medium relative group">
-            All Appointment
-            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/dashboard" className="font-medium relative group">
-            Dashboard
-            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
-          </Link>
+          {navLinks.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`font-medium relative group transition-colors ${
+                  isActive ? 'text-teal-500' : 'text-gray-700 hover:text-teal-500'
+                }`}
+              >
+                {label}
+                <span
+                  className={`absolute left-0 -bottom-1 h-[2px] bg-teal-500 transition-all ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                ></span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Desktop Buttons */}
@@ -66,12 +83,26 @@ const Navbar = () => {
           ) : (
             <>
               <li>
-                <Link href="/login" className="border border-teal-500 text-teal-500 px-4 py-2 rounded-xl text-sm hover:bg-teal-500/10 transition">
+                <Link
+                  href="/login"
+                  className={`px-4 py-2 rounded-xl text-sm transition border border-teal-500 text-teal-500 ${
+                    pathname === '/login'
+                      ? 'bg-teal-500 text-white font-semibold'
+                      : 'hover:bg-teal-500/10'
+                  }`}
+                >
                   Login
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="bg-teal-500 text-white px-4 py-2 rounded-xl text-sm hover:bg-teal-600 transition">
+                <Link
+                  href="/register"
+                  className={`px-4 py-2 rounded-xl text-sm transition bg-teal-500 text-white ${
+                    pathname === '/register'
+                      ? 'ring-2 ring-teal-400 ring-offset-2 font-semibold'
+                      : 'hover:bg-teal-600'
+                  }`}
+                >
                   Register
                 </Link>
               </li>
@@ -79,7 +110,7 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Mobile: Avatar (if logged in) + Hamburger */}
+        {/* Mobile: Avatar + Hamburger */}
         <div className="flex md:hidden items-center gap-3">
           {user && (
             <Avatar>
@@ -93,12 +124,10 @@ const Navbar = () => {
             aria-label="Toggle menu"
           >
             {menuOpen ? (
-              // X icon
               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              // Hamburger icon
               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -110,27 +139,56 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t px-4 py-4 flex flex-col gap-4 shadow-md">
-          <Link href="/" onClick={() => setMenuOpen(false)} className="font-medium text-gray-700 hover:text-blue-600 transition">
-            Home
-          </Link>
-          <Link href="/appointments" onClick={() => setMenuOpen(false)} className="font-medium text-gray-700 hover:text-blue-600 transition">
-            All Appointment
-          </Link>
-          <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="font-medium text-gray-700 hover:text-blue-600 transition">
-            Dashboard
-          </Link>
+          {navLinks.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className={`font-medium transition-colors px-2 py-1 rounded-md ${
+                  isActive
+                    ? 'text-teal-500 bg-teal-50 font-semibold'
+                    : 'text-gray-700 hover:text-teal-500 hover:bg-teal-50'
+                }`}
+              >
+                {isActive && <span className="mr-2">›</span>}
+                {label}
+              </Link>
+            );
+          })}
 
           <div className="border-t pt-3 flex flex-col gap-3">
             {user ? (
-              <Button onClick={() => { logoutHandle(); setMenuOpen(false); }} className="rounded-none w-full" variant="outline">
+              <Button
+                onClick={() => { logoutHandle(); setMenuOpen(false); }}
+                className="rounded-none w-full"
+                variant="outline"
+              >
                 LogOut
               </Button>
             ) : (
               <>
-                <Link href="/login" onClick={() => setMenuOpen(false)} className="border border-teal-500 text-teal-500 px-4 py-2 rounded-xl text-sm text-center hover:bg-teal-500/10 transition">
+                <Link
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className={`px-4 py-2 rounded-xl text-sm text-center transition border border-teal-500 text-teal-500 ${
+                    pathname === '/login'
+                      ? 'bg-teal-500 text-white font-semibold'
+                      : 'hover:bg-teal-500/10'
+                  }`}
+                >
                   Login
                 </Link>
-                <Link href="/register" onClick={() => setMenuOpen(false)} className="bg-teal-500 text-white px-4 py-2 rounded-xl text-sm text-center hover:bg-teal-600 transition">
+                <Link
+                  href="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className={`px-4 py-2 rounded-xl text-sm text-center transition bg-teal-500 text-white ${
+                    pathname === '/register'
+                      ? 'ring-2 ring-teal-400 ring-offset-2 font-semibold'
+                      : 'hover:bg-teal-600'
+                  }`}
+                >
                   Register
                 </Link>
               </>
