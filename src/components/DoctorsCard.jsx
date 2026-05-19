@@ -1,5 +1,6 @@
 import { Button, Card, CardFooter } from '@heroui/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaClock, FaMapMarkerAlt, FaStar } from 'react-icons/fa';
 
@@ -59,9 +60,11 @@ const DoctorsCard = ({appointment}) => {
           </p>
         </div>
 
+       <Link href={`/appointments/${appointment._id}`}>
         <Button className="bg-teal-500 text-white px-4 py-2 rounded-full text-sm hover:bg-teal-600 transition">
           View Details
         </Button>
+       </Link>
       </CardFooter>
     </Card>
     );
