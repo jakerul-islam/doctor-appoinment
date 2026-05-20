@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 const BookingCardModal = ({ doctor }) => {
     const { data: session } = authClient.useSession();
       const user = session?.user;
+      console.log(user , 'from modal')
     const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [selectedGender, setSelectedGender] = useState("Female");
   const [date ,setDate]= useState('') 
@@ -31,7 +32,7 @@ const BookingCardModal = ({ doctor }) => {
   const [phone, setPhone] = useState("");
   const [time, setTime] = useState("");
   const [reason, setReason] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   
 
   const genderOptions = [
@@ -41,15 +42,16 @@ const BookingCardModal = ({ doctor }) => {
   ];
 
   const handleBookingSubmit = async (e) => {
-    e.preventDefault(); // পেজ রিফ্রেশ হওয়া বন্ধ করবে
+    e.preventDefault(); 
     setLoading(true)
-    // ব্যাকেন্ডে পাঠানোর জন্য অবজেক্ট তৈরি
+   
     const bookingData = {
       userEmail: user?.email,
+      userId:user?.id,
       userName:user?.name,
       userImage:user?.image,
       doctorName: doctor.name,
-      doctorId: doctor._id, // যদি ব্যাকেন্ডে আইডি লাগে
+      doctorId: doctor._id, 
       patientName: patientName,
       date: date,
       time: time,
@@ -58,7 +60,7 @@ const BookingCardModal = ({ doctor }) => {
       reason: reason,
     };
    try {
-    // ⬇️ আপনার দেওয়া ফেচ রিকোয়েস্টের কোড
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
       method: 'POST',
       headers: {
@@ -71,19 +73,17 @@ const BookingCardModal = ({ doctor }) => {
 
     console.log(bookings)
 
-    // ⬇️ এখন যা যা করতে হবে (সফল/ব্যর্থ চেক করা)
+    
     if (res.ok) {
-      // ১. সফল হলে ইউজারকে নোটিফিকেশন দিন
+      
       toast.success("🎉 Appointment Booked Successfully!")
-      // (যদি React Toastify ব্যবহার করেন তবে লিখবেন: toast.success("🎉 Appointment Booked Successfully!"))
-
-      // ২. সফল হওয়ার পর ফর্মের ইনপুটগুলো খালি করতে চাইলে:
+     
       setPatientName("");
       setPhone("");
       setReason("");
       setIsOpen(false);
     } else {
-      // ব্যাকেন্ড থেকে কোনো এরর মেসেজ পাঠালে তা দেখানো
+      
       toast.error(bookings.message || "❌ Something went wrong. Please try again.")
     }
 
@@ -91,14 +91,14 @@ const BookingCardModal = ({ doctor }) => {
     console.error("Fetch Error:", error);
     alert("❌ Server connection failed!");
   } finally {
-    // 💡 ৩. কাজ শেষ, বাটন আবার "Confirm Booking" মুডে ফিরে আসবে
+   
     setLoading(false); 
   }
 };
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Button variant="secondary">Book Appointment</Button>
+      <Button onPress={() => setIsOpen(true)} variant="secondary">Book Appointment</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">
           <Modal.Dialog className="sm:max-w-md">
@@ -125,7 +125,7 @@ const BookingCardModal = ({ doctor }) => {
                     <Input disabled />
                   </TextField>
 
-                  {/* Patient Name - ফিক্সড: onChange অ্যাড করা হয়েছে */}
+                 
                   <TextField className="w-full" name="patient" type="text">
                     <Label>Patient Name</Label>
                     <Input 
