@@ -19,7 +19,7 @@ const LoginPage = () => {
     const {data,error}= await authClient.signIn.email({
         ...userData,
 
-        // callbackURL:'/'
+        callbackURL:'/'
     })
 
     // const {data:tokenData}=await authClient.token()
