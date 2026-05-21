@@ -28,7 +28,7 @@ const BookingInfo = ({booking}) => {
           <Calendar size={16} className="text-slate-400 shrink-0" />
           <div className="flex gap-1">
             <span className="text-slate-400">Date:</span>
-            <span className="font-medium text-slate-800">{booking?.appointmentDate || "2026-05-13"}</span>
+            <span className="font-medium text-slate-800">{booking?.date || "2026-05-13"}</span>
           </div>
         </div>
 
@@ -37,7 +37,7 @@ const BookingInfo = ({booking}) => {
           <Clock size={16} className="text-slate-400 shrink-0" />
           <div className="flex gap-1">
             <span className="text-slate-400">Time:</span>
-            <span className="font-medium text-slate-800">{booking?.appointmentTime || "22:09"}</span>
+            <span className="font-medium text-slate-800">{booking?.time || "22:09"}</span>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@ const BookingInfo = ({booking}) => {
        <UpdateModal booking={booking}></UpdateModal>
 
       
-      <BookingDelete></BookingDelete>
+      <BookingDelete bookingId={booking._id}></BookingDelete>
       </div>
     </Card>
     );

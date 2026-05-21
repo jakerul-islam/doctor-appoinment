@@ -2,8 +2,28 @@
 
 import {AlertDialog, Button} from "@heroui/react";
 import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-export function BookingDelete() {
+export function BookingDelete({bookingId}) {
+    const router = useRouter();
+
+    const deleteBookingHandle = async()=>{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/${bookingId}`,{
+            method: 'DELETE',
+            headers:{
+                "content-type":"application/json"
+            }
+        })
+
+        const data = await res.json()
+        console.log(data)
+
+        if(data){
+            toast.success('delete successfully')
+            router.refresh()
+        }
+    }
   return (
     <AlertDialog>
        <Button
@@ -22,17 +42,14 @@ export function BookingDelete() {
               <AlertDialog.Heading>Delete booking permanently?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
-              <p>
-                This will permanently delete <strong>My Awesome Project</strong> and all of its
-                data. This action cannot be undone.
-              </p>
+            
             </AlertDialog.Body>
             <AlertDialog.Footer>
-              <Button slot="close" variant="tertiary">
+              {/* <Button slot="close" variant="tertiary">
                 Cancel
-              </Button>
-              <Button slot="close" variant="danger">
-                Delete Project
+              </Button> */}
+              <Button onClick={deleteBookingHandle} slot="close" variant="danger">
+                Delete Booking
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>
