@@ -2,6 +2,8 @@
 import React from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import MyBookings from './MyBookings';
+import ProfileCard from './ProfileCard';
+
 
 const TabsSection = ({bookingData}) => {
     return (
@@ -14,8 +16,9 @@ const TabsSection = ({bookingData}) => {
     <TabPanel>
      <MyBookings bookingData={bookingData}></MyBookings>
     </TabPanel>
+   
     <TabPanel>
-      <h2>my profile</h2>
+       <ProfileCard></ProfileCard>
     </TabPanel>
   </Tabs>
     );

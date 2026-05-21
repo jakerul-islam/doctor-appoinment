@@ -24,7 +24,7 @@ console.log(user,'from dashboard')
 
     return (
         <div className='container mx-auto mt-10'>
-          <TabsSection bookingData={bookingData}></TabsSection>
+          <TabsSection bookingData={bookingData} ></TabsSection>
         </div>
     );
 };
