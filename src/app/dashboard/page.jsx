@@ -1,11 +1,11 @@
 
-import MyBookings from '@/components/MyBookings';
+
 import TabsSection from '@/components/Tabs';
 import { auth } from '@/lib/auth';
 
 import { headers } from 'next/headers';
 import React from 'react';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+
 import 'react-tabs/style/react-tabs.css';
 
 const DashBoardPage =async () => {
@@ -17,7 +17,15 @@ const DashBoardPage =async () => {
 const user = session?.user
 console.log(user,'from dashboard')
 
-      const res =await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/${user?.id}`)
+const {token }= await auth.api.getToken({headers: await headers()})
+  //  console.log(token ,'from dashborad')
+
+      const res =await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/${user?.id}`,{
+        headers:{
+            authorization: `Bearer ${token}`
+        }
+    })
+       
       const bookingData = await res.json()
 
       console.log(bookingData)
