@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'react-toastify';
 
+
 const RegisterPage = () => {
 const router = useRouter()
 const onSubmit =async(e)=>{
