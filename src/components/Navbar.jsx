@@ -87,7 +87,7 @@ const Navbar = () => {
                   href="/login"
                   className={`px-4 py-2 rounded-xl text-sm transition border border-teal-500 text-teal-500 ${
                     pathname === '/login'
-                      ? 'bg-teal-500 text-white font-semibold'
+                      ? ' bg-[#157a83] text-white font-semibold'
                       : 'hover:bg-teal-500/10'
                   }`}
                 >
@@ -97,7 +97,7 @@ const Navbar = () => {
               <li>
                 <Link
                   href="/register"
-                  className={`px-4 py-2 rounded-xl text-sm transition bg-teal-500 text-white ${
+                  className={`px-4 py-2  text-sm transition rounded-xl bg-[#157a83]   font-semibold text-white ${
                     pathname === '/register'
                       ? 'ring-2 ring-teal-400 ring-offset-2 font-semibold'
                       : 'hover:bg-teal-600'

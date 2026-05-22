@@ -39,7 +39,7 @@ const Banner = () => {
 
               <Link
                 href="/appointments"
-                className="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+                className="px-6 py-3 bg-[#157a83] rounded-lg hover:bg-teal-600 transition"
               >
                 Book Now
               </Link>
@@ -67,7 +67,7 @@ const Banner = () => {
 
               <Link
                 href="/appointments"
-                className="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+                className="px-6 py-3 bg-[#157a83] rounded-lg hover:bg-teal-600 transition"
               >
                 Explore Doctors
               </Link>
@@ -95,7 +95,7 @@ const Banner = () => {
 
               <Link
                 href="/appointments"
-                className="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+                className="px-6 py-3 bg-[#157a83] rounded-lg hover:bg-teal-600 transition"
               >
                 Get Started
               </Link>

@@ -128,7 +128,7 @@ const googleSignInHandle = async()=>{
         <FieldError />
       </TextField>
       <div className="flex gap-2 ">
-        <Button className={'w-full rounded-none border bg-teal-500 text-white px-4 py-2  '} type="submit">
+        <Button className={'w-full  border rounded-none bg-[#157a83] text-white font-semibold px-4 py-2  '} type="submit">
           
          Register
         </Button>

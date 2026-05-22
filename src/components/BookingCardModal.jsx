@@ -100,7 +100,7 @@ const BookingCardModal = ({ doctor }) => {
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Button onPress={() => setIsOpen(true)} variant="secondary">Book Appointment</Button>
+      <Button onPress={() => setIsOpen(true)} className={'rounded-xl bg-[#157a83] text-white font-semibold'} variant="secondary">Book Appointment</Button>
       <Modal.Backdrop>
         <Modal.Container placement="auto">
           <Modal.Dialog className="sm:max-w-md">
