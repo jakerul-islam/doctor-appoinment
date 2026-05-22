@@ -6,11 +6,12 @@ import { Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const UpdateModal = ({ booking }) => {
   const router = useRouter();
   
-  // 🎯 FIXED: Modal open/close manually control korar jonno state add kora holo
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [patientName, setPatientName] = useState(booking.patientName || "");
@@ -31,10 +32,12 @@ const UpdateModal = ({ booking }) => {
     };
 
     try {
+      const{data:tokenData}=await authClient.token()
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/${booking._id}`, {
         method: 'PATCH',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          authorization: `Bearer ${tokenData?.token}`
         },
         body: JSON.stringify(updatedBookingData) 
       });

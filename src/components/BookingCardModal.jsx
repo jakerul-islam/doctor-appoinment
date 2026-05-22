@@ -60,11 +60,13 @@ const BookingCardModal = ({ doctor }) => {
       reason: reason,
     };
    try {
-    
+    const {data:tokenData}=await authClient.token()
+    // console.log(tokenData, 'form booking modal')
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        authorization: `Bearer ${tokenData?.token}`
       },
       body: JSON.stringify(bookingData)
     });

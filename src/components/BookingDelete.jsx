@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {AlertDialog, Button} from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -9,10 +10,12 @@ export function BookingDelete({bookingId}) {
     const router = useRouter();
 
     const deleteBookingHandle = async()=>{
+        const {data:tokenData}=await authClient.token()
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/${bookingId}`,{
             method: 'DELETE',
             headers:{
-                "content-type":"application/json"
+                "content-type":"application/json",
+                authorization: `Bearer ${tokenData?.token}`
             }
         })
 
