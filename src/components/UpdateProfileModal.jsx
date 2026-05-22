@@ -8,7 +8,7 @@ import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { toast } from "react-toastify";
 
 export function UpdateProfileModal() {
-  // 1. Current user-er session context theke data niye asha
+
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
@@ -16,7 +16,7 @@ export function UpdateProfileModal() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
-    // FormData input-er 'name' attribute thakle automatic value pay
+ 
     const name = formData.get("name");
     const image = formData.get("image");
 
@@ -54,7 +54,7 @@ export function UpdateProfileModal() {
                     <Input placeholder="Edit your name" />
                   </TextField>
                   
-                  {/* 3. user?.image thakle sheta default value hishebe baddhiye deya */}
+                  
                   <TextField defaultValue={user?.image || ""} className="w-full" name="image" type="url">
                     <Label>Image</Label>
                     <Input placeholder="Give Url" />
